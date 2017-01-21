@@ -10,9 +10,10 @@ var myMaps = {
 	BindEvents : function() {
 		var me = myMaps;
 		$("#search_button").off("click");
-		$("#search_button").on("click",
+		$("#search_button").on(
+				"click",
 				function() {
-					me.GetGeoCodeForAddress($("#source").val(), $(
+					me.showDirections($("#source").val(), $(
 							"#destination").val());
 
 				});
@@ -26,43 +27,28 @@ var myMaps = {
 			me.InitializeMaps(position.coords.latitude,
 					position.coords.longitude);
 		});
-
-		var places = [];
-		places[0] = new google.maps.places.Autocomplete($("#source")[0]);
-		places[1] = new google.maps.places.Autocomplete($("#destination")[0]);
-		google.maps.event.addListener(places, "place_changed", function() {
-			var place = places.getPlace();
-			var address = places.formatted_address;
-			latitude = place.geometry.location.lat();
-			longitude = place.geometry.location.lng();
-			console.log(latitude + " " + longitude);
-		});
 	},
 
-	GetGeoCodeForAddress : function(source, destination) {
+	showDirections : function(source, destination) {
 		var me = myMaps;
 
-		var geocoder = new google.maps.Geocoder();
-		geocoder.geocode({address : source}, function(result, status) {
+		var directionsService = new google.maps.DirectionsService();
 
-			if (status == google.maps.GeocoderStatus.OK) {
-				var lat = result[0].geometry.location.lat();
-				var lng = result[0].geometry.location.lng();
-				me.InitializeMaps(lat, lng);
-			} else {
-				alert('Geocode was not successful for the following reason: '
-						+ status);
-			}
-		});
-		geocoder.geocode({address : destination},function(results,status){
-			if(status == google.maps.GeocoderStatus.OK){
-				var lat=results[0].geometry.location.lat();
-				var lng=results[0].geometry.location.lng();
-				me.InitializeMaps(lat,lng);
-			}else {
-				alert('Geocode was not successful for the following reason: '
-						+ status);
-			}
+		var directionsRequest = {
+			origin : source,
+			destination : destination,
+			travelMode : google.maps.DirectionsTravelMode.DRIVING,
+			unitSystem : google.maps.UnitSystem.METRIC
+		};
+
+		directionsService.route(directionsRequest, function(response, status) {
+			if (status == google.maps.DirectionsStatus.OK) {
+				new google.maps.DirectionsRenderer({
+					map : new google.maps.Map($("#map")[0]),
+					directions : response
+				});
+			} else
+				$("#error").append("Unable to retrieve your route<br />");
 		});
 
 	},
@@ -74,9 +60,20 @@ var myMaps = {
 		var mapOptions = {
 			center : new google.maps.LatLng(Latitude, Longitude),
 			zoom : 8
-		}
+		};
 
 		var map = new google.maps.Map($("#map")[0], mapOptions);
+		me.PlaceMarker(mapOptions, map);
+
+		new google.maps.places.Autocomplete($("#source")[0]).bindTo("bounds",
+				map);
+		new google.maps.places.Autocomplete($("#destination")[0]).bindTo(
+				'bounds', map);
+
+	},
+
+	PlaceMarker : function(mapOptions, map) {
+		var me = myMaps;
 
 		//The google.maps.Marker constructor takes a single Marker options object literal, specifying the initial properties of the marker
 		var marker = new google.maps.Marker({
