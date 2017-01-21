@@ -8,6 +8,8 @@
 <script src="JS/jquery-3.1.1.js"></script>
 <script src="JS/bootstrap.min.js"></script>
 
+
+
 <style>
 /* .row {
 	border: 1px solid black;
@@ -20,13 +22,18 @@
 </style>
 </head>
 <body>
-<br>
+
+	<br>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-sm-2"> <input type="text" placeholder="Source"></div>
-			<div class="col-sm-2"> <input type="text" placeholder="Destination"></div>
-            <div class="col-sm-2">
-				<button class="btn btn-info btn-sm">
+			<div class="col-sm-2">
+				<input type="text" id="source" placeholder="Source">
+			</div>
+			<div class="col-sm-2">
+				<input type="text" id="destination" placeholder="Destination">
+			</div>
+			<div class="col-sm-2">
+				<button id="search_button" class="btn btn-info btn-sm">
 					<span class="glyphicon glyphicon-search"></span> Search
 				</button>
 			</div>
@@ -35,13 +42,9 @@
 		<div class="row">
 			<div class="col-sm-9" id="map"></div>
 		</div>
-</div>
+	</div>
 
-		<script type="text/javascript" src="Map.js"></script>
-
-		<script
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5LWOi2wv_rEWXviskgorrdTncVmwoDqY&callback=getLocation">
-			
-		</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5LWOi2wv_rEWXviskgorrdTncVmwoDqY&libraries=places"></script>
+<script type="text/javascript" src="myMapsUsingConvention.js"></script>
 </body>
 </html>
