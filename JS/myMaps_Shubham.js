@@ -1,4 +1,7 @@
 ﻿var myMaps = {
+    lat: null,
+    long: null,
+
     Init: function () {
         var me = myMaps;
         me.BindEvents();
