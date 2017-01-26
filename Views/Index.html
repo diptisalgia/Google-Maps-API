@@ -20,6 +20,12 @@
 	height: 590px;
 	border: 1px solid black;
 }
+
+#rightPanel {
+	height: 590px;
+	float: right;
+	overflow: auto;
+}
 </style>
 </head>
 <body>
@@ -33,15 +39,33 @@
 			<div class="col-sm-2">
 				<input type="text" id="destination" placeholder="Destination">
 			</div>
-			<div class="col-sm-2">
-				<button id="search_button" class="btn btn-info btn-sm">
-					<span class="glyphicon glyphicon-search"></span> Search
-				</button>
+			<div class="col-sm-4">
+
+				<div class="row">
+					<div class="col-sm-2">
+						<button id="search_button" class="btn btn-info btn-sm">
+							<span class="glyphicon glyphicon-search"></span> Search
+						</button>
+					</div>
+					<div class="col-sm-2 dropdown">
+						<button class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li ><button id="getCurrentLoc" class="btn btn-info btn-sm">get current location</button></li>
+							<li class="divider"></li>
+							<li ><button id="currentLocInSource" class="btn btn-info btn-sm">current location in source</button></li>
+						</ul>
+					</div>
+				</div>
 			</div>
+
 		</div>
 		<br>
+
 		<div class="row">
 			<div class="col-sm-9" id="map"></div>
+			<div class="col-sm-3" id="rightPanel"></div>
 		</div>
 	</div>
 
