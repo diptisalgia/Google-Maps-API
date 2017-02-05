@@ -33,48 +33,53 @@
 
 	<br>
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-sm-2">
-				<input type="text" id="source" placeholder="Source">
-			</div>
-			<div class="col-sm-2">
-				<input type="text" id="destination" placeholder="Destination">
-			</div>
-			<div class="col-sm-4">
+			<div class="row">
 
-				<div class="row">
-					<div class="col-sm-2">
-						<button id="search_button" class="btn btn-info btn-sm">
-							<span class="glyphicon glyphicon-search"></span> Search
-						</button>
+				<div class="col-sm-3"></div>
+				<div class="col-sm-6">
+					<div class="row" style="background-color: #e5e5ff">
+						<div class="col-xs-1" style="margin-left: -13px">
+							<img src="../Images/images1.jpg" width="50" height="30">
+						</div>
+						<div class="col-xs-3" style="margin-left: 30px">
+							<input type="text" id="source" placeholder="Source">
+						</div>
+						<div class="col-xs-3" style="margin-left: 30px">
+							<input type="text" id="destination" placeholder="Destination">
+						</div>
+
+						<div class="col-xs-4">
+							<div class="row">
+								<div class="col-xs-1" style="margin-left: 50px">
+									<button id="search_button" class="btn btn-info btn-sm">
+										<span class="glyphicon glyphicon-search"></span> Search
+									</button>
+								</div>
+
+								<div class=" col-sm-1 dropdown" style="margin-left: 45px">
+									<button class="btn btn-info dropdown-toggle btn-sm"
+										data-toggle="dropdown">
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu " style="margin-right: 100px">
+
+										<li><a href="#" id="getCurrentLoc" class="searchoptions">get
+												current location</a></li>
+										<li><a href="#" id="currentLocInSource"
+											class="searchoptions">current location in source</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="col-sm-2 dropdown">
-						<button class="btn btn-info dropdown-toggle btn-sm" data-toggle="dropdown">
-							<span class="caret"></span>
-						</button>
-						<!-- <ul class="dropdown-menu">
-						Deemphasize a button by making it look like a link while maintaining button behavior
-							<li ><button type="button" id="getCurrentLoc" class="btn btn-link">get current location</button></li>
-							<li ><button type="button" id="currentLocInSource" class="btn btn-link">current location in source</button></li>
-						</ul> -->
-						<ul class="dropdown-menu">
-
-							<li ><a href="#" id="getCurrentLoc" class="searchoptions">get current location</a></li>
-							<li ><a href="#" id="currentLocInSource" class="searchoptions">current location in source</a></li>
-						</ul>
+					<div class="row">
+						<div id="map"></div>
 					</div>
 				</div>
+				<div class="col-sm-3">
+					<span id="rightPanel"></span>
+				</div>
 			</div>
-
 		</div>
-		<br>
-
-		<div class="row">
-			<div class="col-sm-9" id="map"></div>
-			<div class="col-sm-3" id="rightPanel"></div>
-		</div>
-	</div>
-
-
 </body>
 </html>

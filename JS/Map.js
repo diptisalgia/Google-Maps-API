@@ -2,20 +2,18 @@ var myMaps = {
 
 	map : null,
 	marker : null,
-	curPosition : null,
-
 
 	Init : function() {
 		var me = myMaps;
-		me.InitializeMaps(22.7196, 75.8577);
+		me.InitializeMaps();
 		me.BindEvents();
-		me.GetLocation();
 
 	},
 
 	BindEvents : function() {
 		var me = myMaps;
 		$("#search_button").off("click");
+
 		$("#search_button").on(
 				"click",
 				function() {
@@ -25,53 +23,46 @@ var myMaps = {
 				});
 
 		$(".searchoptions").off("click");
-		$(".searchoptions").on("click", function() {
-			console.log("clicking on any options");
-			var id = this.id;
-			if (id == "getCurrentLoc") {
-				me.GetCurrentLocationOnMap();
-			} else if (id == "currentLocInSource") {
-				me.GetCurrentLocationAddress();
-			}
 
+		$(".searchoptions").on("click", function() {
+			var id = this.id;
+			me.GetCurrentLocationOnMap(id);
 		});
 
 	},
 
-	GetLocation : function() {
+
+
+	GetCurrentLocationOnMap : function(id) {
 		var me = myMaps;
 		var geolocation = navigator.geolocation;
 		geolocation.getCurrentPosition(function(position) {
+
 			var pos = {
 				lat : position.coords.latitude,
 				lng : position.coords.longitude
 			};
-			me.curPosition = pos;
 
-		});
-	},
+			/*
+			 * $( "li" ).first().css( "background-color", "red" );
+			 */
 
-	GetCurrentLocationOnMap : function() {
-		var me = myMaps;
-		me.marker.setMap(null);
-		me.PlaceMarker(me.curPosition.lat, me.curPosition.lng);
+			me.marker.setMap(null);
+			me.PlaceMarker(pos.lat, pos.lng);
 
-	},
-
-	GetCurrentLocationAddress : function() {
-		var me = myMaps;
-		console.log("Welcome");
-
-		var geocoder = new google.maps.Geocoder();
-		geocoder.geocode({
-			'location' : me.curPosition
-		}, function(results, status) {
-			if (status == google.maps.GeocoderStatus.OK) {
-				console.log(results[1].formatted_address);
-				$("#source").val(results[1].formatted_address);
+			if (id == "currentLocInSource") {
+				var geocoder = new google.maps.Geocoder();
+				geocoder.geocode({
+					'location' : pos
+				}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						console.log(results[1].formatted_address);
+						$("#source").val(results[1].formatted_address);
+					}
+				});
 			}
-
 		});
+
 	},
 
 	showDirections : function(source, destination) {
@@ -101,17 +92,17 @@ var myMaps = {
 
 	},
 
-	InitializeMaps : function(Latitude, Longitude) {
+	InitializeMaps : function() {
 		var me = myMaps;
-		console.log(Latitude, Longitude);
+
 		var mapOptions = {
-			//	center : new google.maps.LatLng(Latitude,Longitude),
+			center : new google.maps.LatLng(22.7196, 75.8577),
 			zoom : 8
 		};
 
 		me.map = new google.maps.Map($("#map")[0], mapOptions);
-		//me.PlaceMarker(mapOptions.center);
-		me.PlaceMarker(Latitude, Longitude);
+		me.PlaceMarker(22.7196, 75.8577);
+
 		new google.maps.places.Autocomplete($("#source")[0]).bindTo('bounds',
 				me.map);
 		new google.maps.places.Autocomplete($("#destination")[0]).bindTo(
@@ -121,7 +112,8 @@ var myMaps = {
 
 	PlaceMarker : function(lat, lng) {
 		var me = myMaps;
-		//The google.maps.Marker constructor takes a single Marker options object literal, specifying the initial properties of the marker
+		// The google.maps.Marker constructor takes a single Marker options
+		// object literal, specifying the initial properties of the marker
 		me.marker = new google.maps.Marker({
 			position : new google.maps.LatLng(lat, lng),
 			map : me.map
