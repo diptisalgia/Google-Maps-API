@@ -13,73 +13,61 @@
 
 
 <style>
-/* .row {
-	border: 1px solid black;
-}
- */
+
+
 #map {
-	height: 590px;
-	border: 1px solid black;
+height: 540px;
+border: 1px solid black;
 }
 
 #rightPanel {
-	height: 590px;
-	float: right;
-	overflow: auto;
+float: right;
+overflow: auto;
 }
 </style>
 </head>
 <body>
+<div class="container-fluid">
+	<div class="panel panel-info">
+		<div class="panel-heading">
 
-	<br>
-	<div class="container-fluid">
 			<div class="row">
-
-				<div class="col-sm-3"></div>
-				<div class="col-sm-6">
-					<div class="row" style="background-color: #e5e5ff">
-						<div class="col-xs-1" style="margin-left: -13px">
-							<img src="../Images/images1.jpg" width="50" height="30">
-						</div>
-						<div class="col-xs-3" style="margin-left: 30px">
-							<input type="text" id="source" placeholder="Source">
-						</div>
-						<div class="col-xs-3" style="margin-left: 30px">
-							<input type="text" id="destination" placeholder="Destination">
-						</div>
-
-						<div class="col-xs-4">
-							<div class="row">
-								<div class="col-xs-1" style="margin-left: 50px">
-									<button id="search_button" class="btn btn-info btn-sm">
-										<span class="glyphicon glyphicon-search"></span> Search
-									</button>
-								</div>
-
-								<div class=" col-sm-1 dropdown" style="margin-left: 45px">
-									<button class="btn btn-info dropdown-toggle btn-sm"
-										data-toggle="dropdown">
-										<span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu " style="margin-right: 100px">
-
-										<li><a href="#" id="getCurrentLoc" class="searchoptions">get
-												current location</a></li>
-										<li><a href="#" id="currentLocInSource"
-											class="searchoptions">current location in source</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div id="map"></div>
-					</div>
+				<div class="col-sm-7">
+					<img src="../Images/images1.jpg" width="40" height="40">
 				</div>
-				<div class="col-sm-3">
-					<span id="rightPanel"></span>
+				<div class="col-sm-5">
+					<input type="text" class="input-sm" id="source"
+						placeholder="Source"> <input type="text" class="input-sm"
+						id="destination" placeholder="Destination"> <span
+						class="btn-group">
+						<button id="search_button" class="btn btn-info btn-sm">
+							<span class="glyphicon glyphicon-search"></span> Search
+						</button>
+						<button class="btn btn-info dropdown-toggle btn-sm"
+							data-toggle="dropdown">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu ">
+							<li><a href="#" id="getCurrentLoc" class="searchoptions">get
+									current location</a></li>
+							<li><a href="#" id="currentLocInSource"
+								class="searchoptions">current location in source</a></li>
+						</ul>
+           </span>
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-sm-12">
+				<div id="map"></div>
+			</div>
+			<div class="col-sm-4">
+				<div id="rightPanel" ></div>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>

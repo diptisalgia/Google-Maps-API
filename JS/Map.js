@@ -17,6 +17,11 @@ var myMaps = {
 		$("#search_button").on(
 				"click",
 				function() {
+
+					if($("#source").val()!== null && $("#source").val() !== undefined || $("#destination").val()!== null && $("#destination").val() !== undefined )
+						{
+						$(".col-sm-12").removeClass("col-sm-12").addClass("col-sm-8");
+						}
 					me.showDirections($("#source").val().trim(), $(
 							"#destination").val().trim());
 
@@ -81,13 +86,15 @@ var myMaps = {
 		directionsService.route(directionsRequest, function(response, status) {
 			if (status == google.maps.DirectionsStatus.OK) {
 				me.marker.setMap(null);
-				directionsDisplay.setMap(me.map);
+				//directionsDisplay.setMap(me.map);
+				directionsDisplay.setMap(new google.maps.Map($("#map")[0]));
 				directionsDisplay.setDirections(response);
 			} else
 				alert("Unable to retrieve your route<br />");
 		});
 
 		$("div#rightPanel").empty();
+		$("#rightPanel").css('height','540px');
 		directionsDisplay.setPanel($("#rightPanel")[0]);
 
 	},
