@@ -7,9 +7,14 @@ var userSchema=new Schema({
   password:{type:String,required:true}
 });
 
+/*
+----
 // the schema is useless so far
 // we need to create a model using it
 var User=mongoose.model('userLoginDetails',userSchema);
 
 // make this available to our users in our Node applications
 module.exports(User);
+-----
+*/
+module.exports=mongoose.model('userlogindetails',userSchema);
