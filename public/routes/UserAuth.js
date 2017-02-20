@@ -1,7 +1,7 @@
 var express=require('express');
 
-var router=new express.Router();
- 
+var router=express.Router();
+
 
 
 router.post('/auth',function(req,res){

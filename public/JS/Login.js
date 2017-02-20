@@ -10,16 +10,22 @@ var login={
     $('#error_message').hide();
     $('#submit').off("click");
     $('#submit').on("click",function(){
-    var request = JSON.stringify({username:$("#username").val(),password:$("#password").val()});
+    var request = JSON.stringify({username:$("#username").val().trim(),password:$("#password").val().trim()});
     $.ajax({
                url: "/api/auth",
                type: "POST",
                data: request,
                contentType: "application/json",
                success: function(data) {
-                //  console.log(data);
-                //  console.log('process success');
-                window.location.replace("/map");
+
+                if(data=="success"){
+                  window.location.href="/map";
+                }
+                else {
+                    $("#username").val('');
+                    $("#password").val('');
+                    $('#error_message').show();
+                }
               },
                error: function(err) {
                  console.log(err);

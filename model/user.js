@@ -17,4 +17,4 @@ var User=mongoose.model('userLoginDetails',userSchema);
 module.exports(User);
 -----
 */
-module.exports=mongoose.model('userlogindetails',userSchema);
+module.exports=mongoose.model('userLoginDetails',userSchema);
