@@ -19,6 +19,7 @@ var login={
                success: function(data) {
 
                 if(data=="success"){
+                sessionStorage.setItem("username",$("#username").val().trim());
                   window.location.href="/map";
                 }
                 else {

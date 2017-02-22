@@ -2,11 +2,11 @@
 var express=require('express');  // call express
 var app=express(); // define our app using express
 var bodyparser=require('body-parser');
-var router=express.Router();
-var mongoose=require('mongoose');
-var User=require('./model/user');
-
-mongoose.connect('mongodb://localhost:27017/Map_DB');
+//var router=express.Router();
+//var mongoose=require('mongoose');
+//var User=require('./model/user');
+var router=require('./routes/UserAuth');
+// mongoose.connect('mongodb://localhost:27017/Map_DB');
 
 
 
@@ -24,34 +24,41 @@ app.use(express.static(__dirname+'/Views'));
 // apply the routes to our application
 app.use('/api',router);
 
+//
+//
+// router.post('/auth',function(req,res){
+//    var UserObj=new User(req.body);
+//    UserObj.username=req.body.username;
+//    UserObj.password=req.body.password;
+//
+//    User.find({"username": UserObj.username,"password": UserObj.password},function(err,list){
+//      if(err){
+//        res.send(err);
+//      }
+//      else{
+//         if(list.length>0){
+//           console.log("Success");
+//           res.send("success");
+//           //res.sendFile(__dirname + "/Views/" + "map.html");
+//         }
+//
+//        else {
+//          res.send("failure");
+//        }
+//      }
+//    })
+//
+// });
 
 
-router.post('/auth',function(req,res){
-   var UserObj=new User(req.body);
-   UserObj.username=req.body.username;
-   UserObj.password=req.body.password;
-
-   User.find({"username": UserObj.username,"password": UserObj.password},function(err,list){
-     if(err){
-       res.send(err);
-     }
-     else{
-        if(list.length>0){
-          console.log("Success");
-          res.send("success");
-          //res.sendFile(__dirname + "/Views/" + "map.html");
-        }
-
-       else {
-         res.send("failure");
-       }
-     }
-   })
-
-});
 
 
-//app.use('/user', require('./routes/UserAuth').middleware);
+
+
+
+//https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions
+
+app.use('/auth', router);
 
 app.get('/',function(req,res){
   res.sendFile(__dirname+'/Views/'+'Login.html');
@@ -59,7 +66,8 @@ app.get('/',function(req,res){
 
 
 app.get('/map',function(req,res){
-  res.sendFile(__dirname+'/Views/'+'map.html');
+   res.sendFile(__dirname+'/Views/'+'map.html');
+  
 });
 
 app.listen(5000,function(){

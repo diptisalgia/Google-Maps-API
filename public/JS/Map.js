@@ -7,7 +7,6 @@ var myMaps = {
 		var me = myMaps;
 		me.InitializeMaps();
 		me.BindEvents();
-
 	},
 
 	BindEvents : function() {
@@ -128,7 +127,9 @@ var myMaps = {
 		me.map.setCenter(me.marker.getPosition());
 	}
 }
-
+// if(sessionStorage.getItem("username")!=null && sessionStorage.getItem("username").length>0){
+// 	console.log("HI"+sessionStorage.getItem("username"));
 $(function() {
-	myMaps.Init();
+			myMaps.Init();
+
 });
