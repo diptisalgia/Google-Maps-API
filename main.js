@@ -2,13 +2,8 @@
 var express=require('express');  // call express
 var app=express(); // define our app using express
 var bodyparser=require('body-parser');
-//var router=express.Router();
-//var mongoose=require('mongoose');
-//var User=require('./model/user');
 var router=require('./routes/UserAuth');
 // mongoose.connect('mongodb://localhost:27017/Map_DB');
-
-
 
 //support parsing of application/json type post data
 app.use(bodyparser.json());
@@ -26,20 +21,19 @@ app.use('/api',router);
 
 app.use('/auth', router);
 
-app.use('/save',router);
+app.use('/update',router);
 
 app.get('/',function(req,res){
   res.sendFile(__dirname+'/Views/'+'Login.html');
 });
 
-
 app.get('/map',function(req,res){
-   res.sendFile(__dirname+'/Views/'+'map.html');
-
+  res.sendFile(__dirname+'/Views/'+'map.html');
 });
 
 app.listen(5000,function(){
   console.log('listening on port 5000');
 });
-
 //https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions
+//'atom-text-editor':
+//'cmd-alt-l': 'editor:auto-indent'

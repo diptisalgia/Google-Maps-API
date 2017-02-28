@@ -39,19 +39,19 @@ router.post('/update',function(req,res){
   console.log("destination obtained: "+destination);
 
 
-  User.find({"username":username},{_id:1},function(err,data){
+  User.find({"username":username},{sno:1},function(err,data){
     if(err){
       res.send(err);
     }
     else{
-      console.log("data out of query: "+"  "+ data+"  "+data.map(function(el) { return el._id } ) );
-      var x=data.map(function(el) { return el._id } )[0];
+      console.log("data out of query: "+data.map(function(el) { return el.sno } ) );
+      var x=data.map(function(el) { return el.sno } )[0];
       var obj=new SourceDestinationInfo(req,res);
-     console.log("Type Of : "+typeof x);
-      // obj.sno=x;
-      // obj.list.source=source;
-      // obj.list.destination=destination
-      // console.log(obj.sno+" "+obj.list.source+" "+obj.list.destination)
+
+      obj.sno=x;
+      obj.list.source=source;
+      obj.list.destination=destination
+      console.log(obj.sno+" "+obj.list.source+" "+obj.list.destination)
       //       SourceDestinationInfo.update({sno:obj.sno},{$set:{list:{"source":source,"destination":destination}}},function(err,result){
       //       if(err){
       //         console.log(err);
@@ -76,7 +76,7 @@ router.post('/update',function(req,res){
       //
       // });
 
-      SourceDestinationInfo.update({sno:x},{$push:{list:{source:source,destination:destination}}},function(err,result){
+      SourceDestinationInfo.update({sno:11},{$push:{list:{source:source,destination:destination}}},function(err,result){
         if(err){
           console.log(err);
         }else{

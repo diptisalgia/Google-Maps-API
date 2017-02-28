@@ -1,0 +1,97 @@
+
+
+db.getCollection('SetSourceDestination').insert({sno:"1",list:[{source:"indore",destination:"bhopal"},{source:"delhi",destination:"noida"}]})
+db.getCollection('SetSourceDestination').update({"sno":"1"},$push:{list:[{"source":"pune","destination":"goa"}]});
+
+
+
+db.getCollection('SourceDestinationInfo').insert({sno:1,list:[{source:"indore",destination:"bhopal"},{source:"delhi",destination:"noida"}]})
+db.getCollection('SourceDestinationInfo').update({sno:1},{$push:{list:{source:"abc",destination:"xyz"}}})
+db.getCollection('sourcedestinationinfos').update({},{$pull:{list:{source:"abc"}}})
+
+
+using id
+
+db.getCollection('sourcedestinationinfos').update({'_id':ObjectId("58b3fe4088e8e1e1aff5297f")},{$push:{list:{soutrce:"test1",destination:"test1"}}})
+db.getCollection('sourcedestinationinfos').find({'_id':ObjectId("58b3fe4088e8e1e1aff5297f")})
+db.getCollection('sourcedestinationinfos').update({sno:1},{$set:{sno:"58aadeb4839e148c4d9a5999"}})
+
+-->to remove (pull) from an array:
+   db.getCollection('sourcedestinationinfos').update({sno:"58b416a288e8e1e1aff52982"},{$pull:{list:{source:"test3"}}})
+	after removal:
+	{
+		"_id" : ObjectId("58b4153788e8e1e1aff52981"),
+		"sno" : "58b416a288e8e1e1aff52982",
+		"list" : [ 
+			{
+				"source" : "indore",
+				"destination" : "bhopal"
+			}, 
+			{
+				"source" : "delhi",
+				"destination" : "noida"
+			}, 
+			{
+				"_id" : ObjectId("58b42ef1e38ea010359de8df"),
+				"destination" : "Rajwada, Indore, Madhya Pradesh, India",
+				"source" : "Indore GPO, Indore, Madhya Pradesh, India"
+			}, 
+			{
+				"_id" : ObjectId("58b51f5352bc9efe20366317"),
+				"destination" : "Nagpur, Maharashtra, India",
+				"source" : "Amravati, Maharashtra, India"
+			}
+		]
+	}
+another example:
+db.getCollection('sourcedestinationinfos').update({sno:"58b416a288e8e1e1aff52982"},{$pull:{list:{"_id":ObjectId("58b42ef1e38ea010359de8df")}}})
+after this query:
+{
+    "_id" : ObjectId("58b4153788e8e1e1aff52981"),
+    "sno" : "58b416a288e8e1e1aff52982",
+    "list" : [ 
+        {
+            "source" : "indore",
+            "destination" : "bhopal"
+        }, 
+        {
+            "source" : "delhi",
+            "destination" : "noida"
+        }, 
+        {
+            "_id" : ObjectId("58b51f5352bc9efe20366317"),
+            "destination" : "Nagpur, Maharashtra, India",
+            "source" : "Amravati, Maharashtra, India"
+        }
+    ]
+}
+
+to remove one keyvalue from a document:
+db.getCollection('userlogindetails').update({username:"dipti"},{$unset:{sno:1}})
+
+For User Collection:
+1)Insert
+db.getCollection('userlogindetails').insert({username:"dipti",password:"12345"})
+
+2)to insert sno to this document:
+db.getCollection('userlogindetails').update({username:"dipti"},{$set:{sno:1}})
+
+{
+    "_id" : ObjectId("58b416a288e8e1e1aff52982"),
+    "username" : "dipti",
+    "password" : "12345",
+    "sno" : 1
+}
+
+3)NOw toremove the above added sno:
+db.getCollection('userlogindetails').update({username:"dipti"},{$unset:{sno:1}})
+
+--->Stop Mongoose from creating _id property for sub-document array items
+You can create sub-documents without schema and avoid _id. Just add _id:false to your subdocument declaration:
+var mongoose=require('mongoose');
+var Schema=mongoose.Schema;
+var infoSchema=new Schema({
+  //sno:{type:mongoose.Schema.Types.ObjectId},
+  sno:{type:String},
+  list:[{_id:false,source:String,destination:String}]
+});
