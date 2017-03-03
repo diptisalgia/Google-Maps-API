@@ -19,7 +19,8 @@ var myMaps = {
 			console.log("In Search");
 			var saveForUser=sessionStorage.getItem("username");
 			console.log(saveForUser);
-			var request=JSON.stringify({username:saveForUser,source:$("#source").val().trim(),destination:$("#destination").val().trim()});
+			var current_date=new Date().toISOString();
+			var request=JSON.stringify({date:current_date,username:saveForUser,source:$("#source").val().trim(),destination:$("#destination").val().trim()});
 			console.log(request);
 			$.ajax({
 				url:"/api/update",
@@ -48,6 +49,25 @@ var myMaps = {
 		$(".searchoptions").on("click", function() {
 			var id = this.id;
 			me.GetCurrentLocationOnMap(id);
+		});
+
+		$("#getData").off("click");
+
+		$("#getData").on("click", function() {
+
+			$.ajax({
+				 url :"/api/getData",
+				 type:"GET",
+				 cache:false,
+				 success:function(data){
+					 console.log(data)
+				 }
+				 error:function(err){
+					 console.log(err);
+				 }
+
+			 });
+
 		});
 
 	},

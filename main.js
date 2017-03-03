@@ -23,6 +23,8 @@ app.use('/auth', router);
 
 app.use('/update',router);
 
+app.use('/getData',router);
+
 app.get('/',function(req,res){
   res.sendFile(__dirname+'/Views/'+'Login.html');
 });

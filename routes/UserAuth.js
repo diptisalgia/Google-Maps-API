@@ -35,6 +35,7 @@ router.post('/update',function(req,res){
   var source=req.body.source;
   var destination=req.body.destination;
   var username=req.body.username;
+  var currentdate=req.body.date;
   console.log("source obtained: "+source);
   console.log("destination obtained: "+destination);
 
@@ -47,36 +48,8 @@ router.post('/update',function(req,res){
       console.log("data out of query: "+"  "+ data+"  "+data.map(function(el) { return el._id } ) );
       var x=data.map(function(el) { return el._id } )[0];
       var obj=new SourceDestinationInfo(req,res);
-     console.log("Type Of : "+typeof x);
-      // obj.sno=x;
-      // obj.list.source=source;
-      // obj.list.destination=destination
-      // console.log(obj.sno+" "+obj.list.source+" "+obj.list.destination)
-      //       SourceDestinationInfo.update({sno:obj.sno},{$set:{list:{"source":source,"destination":destination}}},function(err,result){
-      //       if(err){
-      //         console.log(err);
-      //       }else{
-      //         console.log(result);
-      //       }
-      //     });
-      //       res.send("success");
-      //     }
-      //   });
-
-
-
-      //   SourceDestinationInfo.find({},function(err,result){
-      //   if(err){
-      //     console.log(err);
-      //   }else{
-      //     console.log(result.map(function(el) { return el.list[0]; }));
-      //
-      //   res.send("success");
-      // }
-      //
-      // });
-
-      SourceDestinationInfo.update({sno:x},{$push:{list:{source:source,destination:destination}}},function(err,result){
+      console.log("Type Of : "+typeof x);
+      SourceDestinationInfo.update({sno:x},{$push:{list:{date:currentdate,source:source,destination:destination}}},function(err,result){
         if(err){
           console.log(err);
         }else{
@@ -86,7 +59,23 @@ router.post('/update',function(req,res){
         }
 
       });
-     }
-    });
+    }
+  });
 });
-    module.exports=router;
+
+
+router.get('/getData',function(req,res){
+
+  SourceDestinationInfo.find({},function(err,list){
+    if(err){
+      res.send(err);
+    }
+    else{
+
+        res.send(list);
+
+    }
+  })
+
+});
+module.exports=router;

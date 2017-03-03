@@ -95,3 +95,308 @@ var infoSchema=new Schema({
   sno:{type:String},
   list:[{_id:false,source:String,destination:String}]
 });
+
+
+
+
+$project: 	Reshapes each document in the stream, such as by adding new fields or removing existing fields. For each input document, outputs one document.
+
+db.getCollection('Test1').insert({name:"abc",tile:"title",author:{last:"aa",first:"bb"}})
+
+db.getCollection('Test1').aggregate([{$project:{title:1,name:1}}])
+
+eg:
+{
+  "_id" : 1,
+  title: "abc123",
+  isbn: "0001122223334",
+  author: { last: "zzz", first: "aaa" },
+  copies: 5
+}
+The following $project stage includes only the _id, title, and the author fields in its output documents:
+
+db.books.aggregate( [ { $project : { title : 1 , author : 1 } } ] )
+
+The following $project stage excludes the _id field but includes the title, and the author fields in its output documents:
+
+db.books.aggregate( [ { $project : { _id: 0, title : 1 , author : 1 } } ] )
+
+
+For inserting Date:
+
+db.getCollection('sourcedestinationinfos').insert({sno:"58b416a288e8e1e1aff52982",list:[{date:new Date(),source:"indore",destination:"bhopal"},{date:new Date(),source:"delhi",destination:"noida"}]}) 
+db.getCollection('sourcedestinationinfos').update({sno:"58b416a288e8e1e1aff52982"},{$push:{list:{date:new Date(2017,2,27),source:"test1",destination:"test2"}}})
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+AGGREGATE FUNCTION:
+
+db.collection.aggregate(pipeline, options): Calculates aggregate values for the data in a collection.
+pipeline	:A sequence of data aggregation operations or stages. See the aggregation pipeline operators for details.(type:array)
+options	    :Optional. Additional options that aggregate() passes to the aggregate command.(type:document)
+
+Pipeline Aggregation Stages:
+$project, $unwind,  $match, $sort, $count etc
+
+Examples:
+
+1) db.getCollection('sourcedestinationinfos').find()
+ o/p:
+ {
+    "_id" : ObjectId("58b664da88e8e1e1aff52984"),
+    "sno" : "58b416a288e8e1e1aff52982",
+    "list" : [ 
+        {
+            "date" : ISODate("2017-03-01T06:06:18.924Z"),
+            "source" : "indore",
+            "destination" : "bhopal"
+        }, 
+        {
+            "date" : ISODate("2017-03-01T06:06:18.924Z"),
+            "source" : "delhi",
+            "destination" : "noida"
+        }, 
+        {
+            "date" : ISODate("2017-03-26T18:30:00.000Z"),
+            "source" : "test1",
+            "destination" : "test2"
+        }, 
+        {
+            "destination" : "test3",
+            "source" : "test3",
+            "date" : ISODate("2017-02-11T06:22:51.665Z")
+        }, 
+        {
+            "destination" : "Empress Mall, Nagpur, Maharashtra, India",
+            "source" : "Persistent Systems Ltd, South Ambazari Road, Subhash Nagar, Nagpur, Maharashtra, India",
+            "date" : ISODate("2017-03-01T06:47:21.829Z")
+        }
+    ]
+}
+
+USING $unwind: db.getCollection('sourcedestinationinfos').aggregate([{$unwind:'$list'}])
+( $unwind to explode fields into a set of individual documents.)
+o/p:
+{
+    "_id" : ObjectId("58b664da88e8e1e1aff52984"),
+    "sno" : "58b416a288e8e1e1aff52982",
+    "list" : {
+        "date" : ISODate("2017-03-01T06:06:18.924Z"),
+        "source" : "indore",
+        "destination" : "bhopal"
+    }
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("58b664da88e8e1e1aff52984"),
+    "sno" : "58b416a288e8e1e1aff52982",
+    "list" : {
+        "date" : ISODate("2017-03-01T06:06:18.924Z"),
+        "source" : "delhi",
+        "destination" : "noida"
+    }
+}
+
+/* 3 */
+{
+    "_id" : ObjectId("58b664da88e8e1e1aff52984"),
+    "sno" : "58b416a288e8e1e1aff52982",
+    "list" : {
+        "date" : ISODate("2017-03-26T18:30:00.000Z"),
+        "source" : "test1",
+        "destination" : "test2"
+    }
+}
+
+/* 4 */
+{
+    "_id" : ObjectId("58b664da88e8e1e1aff52984"),
+    "sno" : "58b416a288e8e1e1aff52982",
+    "list" : {
+        "destination" : "test3",
+        "source" : "test3",
+        "date" : ISODate("2017-02-11T06:22:51.665Z")
+    }
+}
+
+/* 5 */
+{
+    "_id" : ObjectId("58b664da88e8e1e1aff52984"),
+    "sno" : "58b416a288e8e1e1aff52982",
+    "list" : {
+        "destination" : "Empress Mall, Nagpur, Maharashtra, India",
+        "source" : "Persistent Systems Ltd, South Ambazari Road, Subhash Nagar, Nagpur, Maharashtra, India",
+        "date" : ISODate("2017-03-01T06:47:21.829Z")
+    }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+NEW Schema:
+
+db.getCollection('sourcedestinationinfos').insert({user_id:"58b7ea87041b31c7cce6a99c",details:[{date:new Date(),list:[{source:"goa",destination:"pune"},{source:"agra",destination:"delhi"}]},{date:new Date(2016,11,9),list:[{source:"indore",destination:"nagpur"},{source:"yyy",destination:"zzz"}]}]})
+
+
+
+db.getCollection('Test1').insert({user_name:"john",details:[{cat:"Engg Student",subjectandmarks:[{sub:"java",marks:23},{sub:"mech",marks:29}]},{cat:"Law Student",subjectandmarks:[{sub:"english",marks:43},{sub:"economics",marks:19}]}]})
+
+
+db.getCollection('sourcedestinationinfos').find({"details":{
+                                                 "$elemMatch":{
+                                                     "date":ISODate("2017-03-02T09:36:15.325Z"),
+                                                      "list":{
+                                                          "$elemMatch":{
+                                                              "source":"test2"}}}}})
+															  
+															  
+db.getCollection('Test1').find({"details":{
+                                    "$elemMatch":{
+                                        "cat":"Engg Student"
+                                    }}})															  
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+Testing (Return only specific fields from projection array sub-document) :
+
+db.getCollection('Test1').find()	:
+o/p:
+
+ {
+    "_id" : ObjectId("58b7ee67041b31c7cce6a99e"),
+    "user_name" : "lara",
+    "details" : [ 
+        {
+            "cat" : "Engg Student",
+            "subjectandmarks" : [ 
+                {
+                    "sub" : "java",
+                    "marks" : 23
+                }, 
+                {
+                    "sub" : "mech",
+                    "marks" : 29
+                }
+            ]
+        }, 
+        {
+            "cat" : "Law Student",
+            "subjectandmarks" : [ 
+                {
+                    "sub" : "english",
+                    "marks" : 43
+                }, 
+                {
+                    "sub" : "economics",
+                    "marks" : 19
+                }
+            ]
+        }
+    ]
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("58b9054f344eabef971d6b71"),
+    "user_name" : "john",
+    "details" : [ 
+        {
+            "cat" : "Engg Student",
+            "subjectandmarks" : [ 
+                {
+                    "sub" : "t1",
+                    "marks" : 23
+                }, 
+                {
+                    "sub" : "m1",
+                    "marks" : 29
+                }
+            ]
+        }, 
+        {
+            "cat" : "Law Student",
+            "subjectandmarks" : [ 
+                {
+                    "sub" : "e1",
+                    "marks" : 43
+                }, 
+                {
+                    "sub" : "y1",
+                    "marks" : 19
+                }
+            ]
+        }
+    ]
+}
+
+db.getCollection('Test').aggregate([{$unwind:"$list"},{$match:{"list.source":"indore"}}])
+
+
+db.getCollection('Test1').aggregate([{$unwind:"$details"},{$match:{"details.cat":"Engg Student"}}])
+o/p:
+/* 1 */
+{
+    "_id" : ObjectId("58b7ee67041b31c7cce6a99e"),
+    "user_name" : "lara",
+    "details" : {
+        "cat" : "Engg Student",
+        "subjectandmarks" : [ 
+            {
+                "sub" : "java",
+                "marks" : 23
+            }, 
+            {
+                "sub" : "mech",
+                "marks" : 29
+            }
+        ]
+    }
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("58b9054f344eabef971d6b71"),
+    "user_name" : "john",
+    "details" : {
+        "cat" : "Engg Student",
+        "subjectandmarks" : [ 
+            {
+                "sub" : "t1",
+                "marks" : 23
+            }, 
+            {
+                "sub" : "m1",
+                "marks" : 29
+            }
+        ]
+    }
+}
+
+db.getCollection('Test1').aggregate([{$unwind:"$details"},{$match:{"user_name":"lara","details.cat":"Engg Student"}}])									
+o/p:
+			
+/* 1 */
+{
+    "_id" : ObjectId("58b7ee67041b31c7cce6a99e"),
+    "user_name" : "lara",
+    "details" : {
+        "cat" : "Engg Student",
+        "subjectandmarks" : [ 
+            {
+                "sub" : "java",
+                "marks" : 23
+            }, 
+            {
+                "sub" : "mech",
+                "marks" : 29
+            }
+        ]
+    }
+}			
