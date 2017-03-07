@@ -30,7 +30,7 @@ router.post('/auth',function(req,res){
 });
 
 
-router.post('/update',function(req,res){
+router.put('/update',function(req,res){
 
   var source=req.body.source;
   var destination=req.body.destination;
@@ -49,7 +49,7 @@ router.post('/update',function(req,res){
       var x=data.map(function(el) { return el._id } )[0];
       var obj=new SourceDestinationInfo(req,res);
       console.log("Type Of : "+typeof x);
-      SourceDestinationInfo.update({sno:x},{$push:{list:{date:currentdate,source:source,destination:destination}}},function(err,result){
+      SourceDestinationInfo.update({user_id:x,"details.date":"2017-03-02T09:51:05.908Z"},{$push:{"details.$.list":{source:source,destination:destination}}},function(err,result){
         if(err){
           console.log(err);
         }else{

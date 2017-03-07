@@ -20,6 +20,7 @@ var myMaps = {
 			var saveForUser=sessionStorage.getItem("username");
 			console.log(saveForUser);
 			var current_date=new Date().toISOString();
+
 			var request=JSON.stringify({date:current_date,username:saveForUser,source:$("#source").val().trim(),destination:$("#destination").val().trim()});
 			console.log(request);
 			$.ajax({
@@ -51,22 +52,41 @@ var myMaps = {
 			me.GetCurrentLocationOnMap(id);
 		});
 
-		$("#getData").off("click");
+		//https://learn.jquery.com/ajax/jquery-ajax-methods/
+		$("#history").off("click");
 
-		$("#getData").on("click", function() {
+		$("#history").on("click", function() {
 
 			$.ajax({
-				 url :"/api/getData",
-				 type:"GET",
-				 cache:false,
-				 success:function(data){
-					 console.log(data)
-				 }
-				 error:function(err){
-					 console.log(err);
-				 }
+				url :"/api/getData",
+				type:"GET",
+				data: {
+					format: 'json'
+				},
+				// The type of data we expect back
 
-			 });
+				success:function(data){
+					$("#show_data").html(data);
+					console.log(data)
+				}
+				// error:function(err){
+				// 	console.log(err);
+				// }
+
+			});
+
+		});
+
+
+		$("#openNav").off('click');
+		$("#openNav").on('click',function(){
+			$("#mySidenav").width(250);
+
+		});
+
+		$("#closeNav").off('click');
+		$("#closeNav").on('click',function(){
+			$("#mySidenav").width(0);
 
 		});
 
@@ -166,10 +186,19 @@ var myMaps = {
 $(function() {
 
 	if(!sessionStorage.getItem("username")){
-		console.log("HI"+sessionStorage.getItem("username"));
+		console.log("HI"+sessionStorage.getItem("username") );
 		window.location.href="/";
 	}
 	else
-	myMaps.Init();
+	{var x=new Date();
+		var dd=x.getDate();
+		var mm=x.getMonth();
 
+		var yy=x.getFullYear();
+		var isodate=new Date();
+		isodate.setHours(00,00,00)
+		console.log("  "+" ,year:"+x.getFullYear()+"date: "+x.getDate()+"month: "+x.getMonth());
+		console.log("ISO FORMAT: "+isodate.toISOString()+" "+isodate);
+		myMaps.Init();
+	}
 });
