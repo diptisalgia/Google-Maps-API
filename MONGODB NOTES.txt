@@ -410,7 +410,15 @@ db.getCollection('sourcedestinationinfos').update({user_id:"58b416a288e8e1e1aff5
 --> Add Elements at the Start of the Array
 .update({user_id:"58b416a288e8e1e1aff52982","details.date":ISODate("2017-03-02T09:36:15.325Z")},{$push:{"details.$.list":{$each:[{source:"hah",destination:"hahaha"}],$position:0}}})
 
+---> Add to our schema:
+var infoSchema=new Schema({
+  //sno:{type:mongoose.Schema.Types.ObjectId},
+  user_id:{type:String},
+  details:[{_id:false,date:Date,list:[{_id:false,source:String,destination:String}]}]
 
+});
+
+db.getCollection('sourcedestinationinfos').update({user_id:"58b416a288e8e1e1aff52982"},{$push:{details:{date:new Date(),list:[{source:"a1",destination:"a1"},{source:"a2",destination:"a2"}]}}})
 
 Consider a collection students that contains the following document:
 
@@ -436,3 +444,23 @@ The operation results in the following updated document:
 to find the date:
 db.getCollection('sourcedestinationinfos').aggregate({$unwind:"$details"},
           {$match:{user_id:"58b416a288e8e1e1aff52982","details.date":{$gte : new ISODate("2017-03-02T00:00:00.000Z")}}})
+		  
+aggregate({$unwind:"$details"},
+          {$match:{user_id:"58b416a288e8e1e1aff52982","details.date":{$gte : new ISODate("2017-03-02T00:00:00.000Z")}}})		  
+		  
+		  
+		  
+$Slice
+
+Use $slice.
+
+db.foo.find({ bar : "xyz" } , { my_array : { $slice : [n , 1] } } )
+will retrieve the nth element of the array "my_array" of all documents in the foo collection where bar = "xyz".
+
+Some other examples from the MongoDB documentation:
+
+db.posts.find({}, {comments:{$slice: 5}}) // first 5 comments
+db.posts.find({}, {comments:{$slice: -5}}) // last 5 comments
+db.posts.find({}, {comments:{$slice: [20, 10]}}) // skip 20, limit 10
+db.posts.find({}, {comments:{$slice: [-20, 10]}}) // 20 from end, limit 10		  
+db.posts.find({}, {comments:{$slice: [-20, 10]}}) // 20 from end, limit 10		  
