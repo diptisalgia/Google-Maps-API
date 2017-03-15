@@ -454,6 +454,8 @@ $Slice
 
 Use $slice.
 
+find({user_id:"58b416a288e8e1e1aff52982"},{"details":{$slice:-1}})
+
 db.foo.find({ bar : "xyz" } , { my_array : { $slice : [n , 1] } } )
 will retrieve the nth element of the array "my_array" of all documents in the foo collection where bar = "xyz".
 

@@ -7,35 +7,32 @@ var myMaps = {
 		var me = myMaps;
 		me.InitializeMaps();
 		me.BindEvents();
-
+    me.GetHistory();
 	},
 
+
 	BindEvents : function() {
+
 		var me = myMaps;
+
+		//On clicking Search Button
 		$("#search_button").off("click");
-
 		$("#search_button").on("click",function() {
-
-			console.log("In Search");
 			var saveForUser=sessionStorage.getItem("username");
-			console.log(saveForUser);
-			var current_date=new Date().toISOString();
-
-			var request=JSON.stringify({date:current_date,username:saveForUser,source:$("#source").val().trim(),destination:$("#destination").val().trim()});
-			console.log(request);
+			var request=JSON.stringify({username:saveForUser,source:$("#source").val().trim(),destination:$("#destination").val().trim()});
 			$.ajax({
 				url:"/api/update",
-				type:"POST",
+				type:"PUT",
 				data:request,
 				contentType:"application/json",
 
 				success:function(data){
 					console.log(data);
+          me.GetHistory();
 				},
 				error:function(err){
 					console.log(err);
 				}
-
 			});
 
 			if($("#source").val()!== null && $("#source").val() !== undefined || $("#destination").val()!== null && $("#destination").val() !== undefined )
@@ -43,56 +40,51 @@ var myMaps = {
 				$(".col-sm-12").removeClass("col-sm-12").addClass("col-sm-8");
 			}
 			me.showDirections($("#source").val().trim(), $("#destination").val().trim());
+
 		});
 
+		//On Clicking search options(button drop down)
 		$(".searchoptions").off("click");
-
 		$(".searchoptions").on("click", function() {
 			var id = this.id;
 			me.GetCurrentLocationOnMap(id);
 		});
 
-		//https://learn.jquery.com/ajax/jquery-ajax-methods/
-		$("#history").off("click");
-
-		$("#history").on("click", function() {
-
-			$.ajax({
-				url :"/api/getData",
-				type:"GET",
-				data: {
-					format: 'json'
-				},
-				// The type of data we expect back
-
-				success:function(data){
-					$("#show_data").html(data);
-					console.log(data)
-				}
-				// error:function(err){
-				// 	console.log(err);
-				// }
-
-			});
-
-		});
-
-
+		//to open side nav
 		$("#openNav").off('click');
 		$("#openNav").on('click',function(){
 			$("#mySidenav").width(250);
-
 		});
 
+		//to close side nav
 		$("#closeNav").off('click');
 		$("#closeNav").on('click',function(){
 			$("#mySidenav").width(0);
-
 		});
 
 	},
 
+  GetHistory: function(){
+		var me=myMaps;
+		var userName=sessionStorage.getItem("username");
+		var request=JSON.stringify({userName:userName});
+		console.log(request);
+		$.ajax({
+			url :"/api/getData",
+			type:"POST",
+			data: request,
+			contentType:"application/json",
+			success:function(data){
 
+				$("#show_data").html(
+					data[0].details[3].date);
+				console.log(data)
+			},
+			error:function(err){
+				console.log(err);
+			}
+		});
+	},
 
 	GetCurrentLocationOnMap : function(id) {
 		var me = myMaps;
@@ -103,10 +95,6 @@ var myMaps = {
 				lat : position.coords.latitude,
 				lng : position.coords.longitude
 			};
-
-			/*
-			* $( "li" ).first().css( "background-color", "red" );
-			*/
 
 			me.marker.setMap(null);
 			me.PlaceMarker(pos.lat, pos.lng);
@@ -183,22 +171,13 @@ var myMaps = {
 	}
 }
 
-$(function() {
 
+$(function() {
 	if(!sessionStorage.getItem("username")){
 		console.log("HI"+sessionStorage.getItem("username") );
 		window.location.href="/";
 	}
-	else
-	{var x=new Date();
-		var dd=x.getDate();
-		var mm=x.getMonth();
-
-		var yy=x.getFullYear();
-		var isodate=new Date();
-		isodate.setHours(00,00,00)
-		console.log("  "+" ,year:"+x.getFullYear()+"date: "+x.getDate()+"month: "+x.getMonth());
-		console.log("ISO FORMAT: "+isodate.toISOString()+" "+isodate);
+	else{
 		myMaps.Init();
 	}
 });

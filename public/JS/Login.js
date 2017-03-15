@@ -5,9 +5,11 @@ var login={
     var me=login;
     me.BindEvents();
   },
+
   BindEvents:function(){
     var me=login;
     $('#error_message').hide();
+
     $('#submit').off("click");
     $('#submit').on("click",function(){
       var request = JSON.stringify({username:$("#username").val().trim(),password:$("#password").val().trim()});
