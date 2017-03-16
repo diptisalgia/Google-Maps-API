@@ -21,14 +21,14 @@ var login={
         success: function(data) {
 
           if(data=="success"){
-            sessionStorage.setItem("username",$("#username").val().trim());
-
+          //  sessionStorage.setItem("username",$("#username").val().trim());
             window.location.href="/map";
           }
           else {
             $("#username").val('');
             $("#password").val('');
             $('#error_message').show();
+
           }
         },
         error: function(err) {

@@ -3,7 +3,14 @@ var express=require('express');  // call express
 var app=express(); // define our app using express
 var bodyparser=require('body-parser');
 var router=require('./routes/UserAuth');
-// mongoose.connect('mongodb://localhost:27017/Map_DB');
+var session=require('express-session');
+
+app.use(session({
+  resave:true,
+  saveUninitialized:true,
+  secret:'secretkey',
+}));
+
 
 //support parsing of application/json type post data
 app.use(bodyparser.json());
@@ -16,6 +23,7 @@ app.use(express.static(__dirname+'/public'));
 
 app.use(express.static(__dirname+'/Views'));
 
+
 // apply the routes to our application
 app.use('/api',router);
 
@@ -26,10 +34,12 @@ app.use('/update',router);
 app.use('/getData',router);
 
 app.get('/',function(req,res){
+  req.session.name;
   res.sendFile(__dirname+'/Views/'+'Login.html');
 });
 
 app.get('/map',function(req,res){
+  req.session.name;
   res.sendFile(__dirname+'/Views/'+'map.html');
 });
 

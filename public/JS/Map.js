@@ -66,13 +66,13 @@ var myMaps = {
 
   GetHistory: function(){
 		var me=myMaps;
-		var userName=sessionStorage.getItem("username");
-		var request=JSON.stringify({userName:userName});
-		console.log(request);
+	//	var userName=sessionStorage.getItem("username");
+	//	var request=JSON.stringify({userName:userName});
+		//console.log(request);
 		$.ajax({
 			url :"/api/getData",
 			type:"POST",
-			data: request,
+	//		data: request,
 			contentType:"application/json",
 			success:function(data){
 
@@ -173,11 +173,11 @@ var myMaps = {
 
 
 $(function() {
-	if(!sessionStorage.getItem("username")){
-		console.log("HI"+sessionStorage.getItem("username") );
-		window.location.href="/";
-	}
-	else{
+	// if(!sessionStorage.getItem("username")){
+	// 	console.log("HI"+sessionStorage.getItem("username") );
+	// 	window.location.href="/";
+	// }
+	// else{
 		myMaps.Init();
-	}
+	// }
 });

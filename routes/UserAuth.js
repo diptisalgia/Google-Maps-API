@@ -1,9 +1,9 @@
 var express=require('express');
-
 var router=new express.Router();
 var mongoose=require('mongoose');
 var User=require('../model/user');
 var SourceDestinationInfo=require('../model/SourceDestinationInfo');
+
 mongoose.connect('mongodb://localhost:27017/Map_DB');
 
 router.post('/auth',function(req,res){
@@ -11,14 +11,19 @@ router.post('/auth',function(req,res){
   UserObj.username=req.body.username;
   UserObj.password=req.body.password;
 
+
   User.find({"username": UserObj.username,"password": UserObj.password},function(err,list){
     if(err){
       res.send(err);
     }
     else{
       if(list.length>0){
+        req.session.name=req.body.username;
+        console.log("*****"+req.session.name)
         console.log("in success flow");
+
         res.send("success");
+
       }
       else {
         console.log("in failure flow");
@@ -105,7 +110,9 @@ router.put('/update',function(req,res){
 
 
 router.post('/getData',function(req,res){
-  var userName=req.body.userName;
+var userName=req.session.name;
+console.log("In Get Data : userName:  "+userName);
+//  var userName=req.body.userName;
   User.find({username:userName},function(err,data){
    if(err){
      res.send(err);
