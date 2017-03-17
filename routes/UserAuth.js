@@ -4,6 +4,8 @@ var mongoose=require('mongoose');
 var User=require('../model/user');
 var SourceDestinationInfo=require('../model/SourceDestinationInfo');
 
+
+
 mongoose.connect('mongodb://localhost:27017/Map_DB');
 
 router.post('/auth',function(req,res){
@@ -21,7 +23,6 @@ router.post('/auth',function(req,res){
         req.session.name=req.body.username;
         console.log("*****"+req.session.name)
         console.log("in success flow");
-
         res.send("success");
 
       }
@@ -39,10 +40,11 @@ router.put('/update',function(req,res){
 
   var source=req.body.source;
   var destination=req.body.destination;
-  var username=req.body.username;
+//  var username=req.body.username;
   var currentdate=new Date();
   var newdate=currentdate.toISOString();
-
+  var username=req.session.name;
+console.log("IN UPDATE:"+username);
   var dbDate,dbMonth,dbYear,currDate,currMonth,currYear;
   var isoDate;
   User.find({"username":username},{_id:1},function(err,data){
@@ -112,7 +114,7 @@ router.put('/update',function(req,res){
 router.post('/getData',function(req,res){
 var userName=req.session.name;
 console.log("In Get Data : userName:  "+userName);
-//  var userName=req.body.userName;
+
   User.find({username:userName},function(err,data){
    if(err){
      res.send(err);

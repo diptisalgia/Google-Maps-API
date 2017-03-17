@@ -18,8 +18,8 @@ var myMaps = {
 		//On clicking Search Button
 		$("#search_button").off("click");
 		$("#search_button").on("click",function() {
-			var saveForUser=sessionStorage.getItem("username");
-			var request=JSON.stringify({username:saveForUser,source:$("#source").val().trim(),destination:$("#destination").val().trim()});
+		//	var saveForUser=sessionStorage.getItem("username");
+			var request=JSON.stringify({source:$("#source").val().trim(),destination:$("#destination").val().trim()});
 			$.ajax({
 				url:"/api/update",
 				type:"PUT",
@@ -66,14 +66,12 @@ var myMaps = {
 
   GetHistory: function(){
 		var me=myMaps;
-	//	var userName=sessionStorage.getItem("username");
-	//	var request=JSON.stringify({userName:userName});
-		//console.log(request);
+
 		$.ajax({
 			url :"/api/getData",
 			type:"POST",
-	//		data: request,
-			contentType:"application/json",
+	//	data: request,
+		//	contentType:"application/json",
 			success:function(data){
 
 				$("#show_data").html(
@@ -173,11 +171,7 @@ var myMaps = {
 
 
 $(function() {
-	// if(!sessionStorage.getItem("username")){
-	// 	console.log("HI"+sessionStorage.getItem("username") );
-	// 	window.location.href="/";
-	// }
-	// else{
+
 		myMaps.Init();
-	// }
+
 });

@@ -11,7 +11,6 @@ app.use(session({
   secret:'secretkey',
 }));
 
-
 //support parsing of application/json type post data
 app.use(bodyparser.json());
 
@@ -27,19 +26,11 @@ app.use(express.static(__dirname+'/Views'));
 // apply the routes to our application
 app.use('/api',router);
 
-app.use('/auth', router);
-
-app.use('/update',router);
-
-app.use('/getData',router);
-
 app.get('/',function(req,res){
-  req.session.name;
   res.sendFile(__dirname+'/Views/'+'Login.html');
 });
 
 app.get('/map',function(req,res){
-  req.session.name;
   res.sendFile(__dirname+'/Views/'+'map.html');
 });
 
