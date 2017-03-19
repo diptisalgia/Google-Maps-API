@@ -1,0 +1,26 @@
+{
+  "name": "my_package",
+  "version": "1.0.0",
+  "description": "Google Maps API Node Project",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diptisalgia/Google-Maps-API.git"
+  },
+  "author": "Dipti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diptisalgia/Google-Maps-API/issues"
+  },
+  "homepage": "https://github.com/diptisalgia/Google-Maps-API#readme",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1",
+    "express-session": "^1.15.1",
+    "mongoose": "^4.8.2",
+    "node-inspector": "^0.12.8"
+  }
+}
