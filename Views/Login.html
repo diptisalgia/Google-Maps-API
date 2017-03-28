@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="myApp">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -7,10 +7,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="../JS/Login.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+
+<script src="../JS/LoginController.js"></script>
 
 </head>
-<body>
+<body ng-controller="LoginController">
 <div class="container-fluid">
 	<div class="panel panel-info">
 	<div class="panel-header">
@@ -18,30 +20,27 @@
 	</div>
 	<div class="panel-body">
 
-   <!-- <form class="form-horizontal" method ="POST" action="/api/auth"> -->
-
-		    <div id="error_message" class="text-center text-danger" >Invalid Username or Password </div>
+		    <div ng-show="error_message" id="error_message" class="text-center text-danger"  >Invalid Username or Password </div>
 				<div class="row" style="margin-bottom:10px">
-       <label class="control-label  col-sm-offset-3 col-sm-2" for="username">User Name</label>
+       <label class="control-label  col-sm-offset-3 col-sm-2" for="username">User Name</label>{{username}}
         <div class="col-sm-4">
-          <input type="text" class="form-control" id="username" name="username" placeholder="Enter User Name">
+          <input type="text" class="form-control" id="username" name="username" ng-model="username" placeholder="Enter User Name">
         </div>
 				<br>
       </div>
 			<div class="row" style="margin-bottom:10px">
       <label class="control-label col-sm-offset-3 col-sm-2" for="password">Password</label>
         <div class="col-sm-4">
-          <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
+          <input type="password" class="form-control" id="password" name="password" ng-model="password" placeholder="Enter Password">
         </div>
       <br>
       </div>
       <div class="row" >
 				<div>
        <div class="col-sm-offset-6">
-         <button  id="submit" class="btn btn-default">Submit</button>
+         <button  type="button" ng-click="submit()" id="submit" class="btn btn-default">Submit</button>
        </div>
      </div>
-   <!-- </form> -->
 
    </div>
 	</div>

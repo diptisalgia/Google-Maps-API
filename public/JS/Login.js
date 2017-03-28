@@ -28,8 +28,6 @@ var login={
             $("#username").val('');
             $("#password").val('');
             $('#error_message').show();
-
-
           }
         },
         error: function(err) {

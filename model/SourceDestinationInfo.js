@@ -20,4 +20,3 @@ module.exports=mongoose.model('sourcedestinationinfos',infoSchema);
 //for session managment:
 //https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions
 //https://www.thepolyglotdeveloper.com/2015/01/session-management-expressjs-web-application/
-//https://github.com/blog/2019-how-to-undo-almost-anything-with-git

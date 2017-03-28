@@ -13,7 +13,7 @@ router.post('/auth',function(req,res){
   UserObj.username=req.body.username;
   UserObj.password=req.body.password;
 
-
+        console.log("*****"+UserObj.username);
   User.find({"username": UserObj.username,"password": UserObj.password},function(err,list){
     if(err){
       res.send(err);
