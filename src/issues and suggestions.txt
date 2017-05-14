@@ -1,0 +1,65 @@
+index.html:
+
+1) When I go to mobile view the heading "Appian Solutions" gets cut. Meaning its only half visible.(issue)--->
+
+chnages in 
+   #header {
+        background: #416b88;
+        min-height: 75px;
+        padding: 5px 0 0;
+        height: auto;
+        overflow: hidden;
+    } and remove inline style from index.html
+
+
+
+
+2) In the index.html cards, like the image in each card, you might want to make the Heading of each card fixed as well so that it doesn't scroll up with the content. This way, the user won't need to scroll all the way up to the see the heading if the content size increases. (suggestion)
+
+3) In the mobile view, make one card visible in one row rather than 2 cards. This would be easily readable and look better.(suggestion)-->
+changes to be made in 
+ <div class="box-margin col-lg-3 col-md-3 col-sm-4 col-xs-12 filter Products All"> every where
+
+
+
+4) Under the headings like Templates and Connectors, where there is no data to show, you might want to show a message like "No data to show..." (suggestion)
+
+5) The gap between the card heading and the image above is too much. Reduce that (suggestion)
+
+6) If I increase my content, the content remains in the box but is not visible after the width of the box. 
+   I think there should be an overflow-x property as well(issue)--> y se hi ho jayega na?
+added
+  .panel-body {
+        height: 140px;
+        min-height: 140px; 
+        overflow-y: auto;
+        overflow-x: auto;--> ye dalne se in mobile view panel ki right border nai aa rahi which will appear when scrolling right
+        }
+
+   
+7) In the mobile view, you might want to increase the vertical gap between the All, Templates, Products button.(suggestion)
+
+
+solution_details.html:
+
+1) Too less space between glyphicon and corresponding links (issue)
+
+2) In mobile view, the home glyphicon gets cut out of the page(issue)--?????????
+
+3) The Home, View DataSheet links should come at the center(below the AppInsights heading) and one below the other in the mobile view(suggestion)--- nai ho raha tha
+
+4) Will the content in the boxes on these pages increase? If that is the case, then apply overflow-x and overflow-y as well. (suggestion)-->
+
+.fixed-panel {
+      min-height: 130px;
+      height: 130px;
+      overflow-y: auto;
+   
+        
+    }
+
+
+5) In web view, unable to click on the Home or other links. Able to click them in mobile view(issue)
+
+
+7)--
