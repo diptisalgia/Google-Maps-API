@@ -72,10 +72,10 @@ a:hover {
     text-align: center;
     margin:0 auto;
 }
-nav div ul{
+/*nav div ul{
     margin-top: -20px;
     list-style-type: none;
-}
+}*/
 
 /*.nav div ul{
     
@@ -83,10 +83,31 @@ nav div ul{
     display: table-row;
     margin: 0 auto;
     padding: 0 auto;
-}
-
-.nav div ul li{
+} .nav div ul li{
     
    display: table-cell; 
    
   }*/
+
+
+
+nav div ul {
+    width: 100%;
+   /* background: #cacaca;*/
+    margin: 0;
+    padding: 0;
+}
+nav div ul li {
+    list-style-type: none;
+    display: inline-block;
+    padding-right: 0;
+    width: auto;
+    margin-right: 0;
+    /*background: #fafafa;*/
+    padding-left: 0;
+    margin-left: 0;
+}
+/*nav div ul li:last-child {
+    margin-right: 0;
+    padding-right: 0;
+}*/
